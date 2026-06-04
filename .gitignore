@@ -1,0 +1,6 @@
+creds.env
+assessment-*/
+__pycache__/
+*.pyc
+example/out/
+.DS_Store

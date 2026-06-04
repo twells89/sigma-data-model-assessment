@@ -1,0 +1,312 @@
+{
+  "base": "https://api.example.aws.sigmacomputing.com",
+  "generated": "2026-06-04T00:00:00+00:00",
+  "total_dms": 122,
+  "by_bucket": {
+    "personal (My Documents)": 78,
+    "0. CENTRALIZED": 22,
+    "FP&A": 9,
+    "1. PRODUCTION": 1,
+    "other shared": 12
+  },
+  "duplicate_clusters": [
+    {
+      "key": "sales mart dm",
+      "count": 4,
+      "names": [
+        "Sales Mart DM",
+        "Sales Mart DM (1)",
+        "Sales Mart DM Test"
+      ],
+      "paths": [
+        "0. CENTRALIZED/Sales",
+        "My Documents"
+      ]
+    },
+    {
+      "key": "customer 360 dm",
+      "count": 3,
+      "names": [
+        "Customer 360 DM",
+        "Customer 360 DM (1)"
+      ],
+      "paths": [
+        "0. CENTRALIZED/CRM",
+        "My Documents"
+      ]
+    },
+    {
+      "key": "finance targets dm",
+      "count": 3,
+      "names": [
+        "Finance Targets DM",
+        "Finance Targets DM UAT"
+      ],
+      "paths": [
+        "FP&A/Models",
+        "My Documents/Archived Users/j.doe"
+      ]
+    },
+    {
+      "key": "returns dm",
+      "count": 2,
+      "names": [
+        "Returns DM",
+        "Returns DM (1)"
+      ],
+      "paths": [
+        "0. CENTRALIZED/Ops",
+        "My Documents"
+      ]
+    }
+  ],
+  "duplicate_dm_total": 12,
+  "deep": [
+    {
+      "_meta": {
+        "name": "Sales Mart DM",
+        "path": "0. CENTRALIZED/Sales",
+        "version": 180,
+        "id": "sample-Sales "
+      },
+      "elements": 24,
+      "empty_named_elements": 9,
+      "source_kinds": {},
+      "total_columns": 214,
+      "calc_columns": 190,
+      "passthrough_columns": 24,
+      "metrics": 0,
+      "relationships": 0,
+      "lookup_columns": 18,
+      "aggregate_calc_cols": 0,
+      "dup_formula_clusters": [
+        {
+          "formula": "DateTrunc(\"day\", [As Of])",
+          "count": 6
+        },
+        {
+          "formula": "[Gross Revenue] + [Adjustments]",
+          "count": 4
+        },
+        {
+          "formula": "DateAdd(\"day\", -1, Today())",
+          "count": 4
+        }
+      ],
+      "typo_shadow_columns": [],
+      "cross_elem_lookup_risk": 18,
+      "sandbox_refs": []
+    },
+    {
+      "_meta": {
+        "name": "Legacy Orders DM",
+        "path": "0. CENTRALIZED/Legacy",
+        "version": 60,
+        "id": "sample-Legacy"
+      },
+      "elements": 27,
+      "empty_named_elements": 14,
+      "source_kinds": {},
+      "total_columns": 77,
+      "calc_columns": 50,
+      "passthrough_columns": 27,
+      "metrics": 0,
+      "relationships": 6,
+      "lookup_columns": 0,
+      "aggregate_calc_cols": 0,
+      "dup_formula_clusters": [],
+      "typo_shadow_columns": [],
+      "cross_elem_lookup_risk": 0,
+      "sandbox_refs": [
+        "DEV_SANDBOX"
+      ]
+    },
+    {
+      "_meta": {
+        "name": "Customer 360 DM",
+        "path": "0. CENTRALIZED/CRM",
+        "version": 80,
+        "id": "sample-Custom"
+      },
+      "elements": 25,
+      "empty_named_elements": 10,
+      "source_kinds": {},
+      "total_columns": 53,
+      "calc_columns": 28,
+      "passthrough_columns": 25,
+      "metrics": 11,
+      "relationships": 0,
+      "lookup_columns": 12,
+      "aggregate_calc_cols": 5,
+      "dup_formula_clusters": [],
+      "typo_shadow_columns": [],
+      "cross_elem_lookup_risk": 12,
+      "sandbox_refs": []
+    },
+    {
+      "_meta": {
+        "name": "Inventory Snapshot DM",
+        "path": "0. CENTRALIZED/Ops",
+        "version": 40,
+        "id": "sample-Invent"
+      },
+      "elements": 7,
+      "empty_named_elements": 2,
+      "source_kinds": {},
+      "total_columns": 37,
+      "calc_columns": 30,
+      "passthrough_columns": 7,
+      "metrics": 0,
+      "relationships": 0,
+      "lookup_columns": 2,
+      "aggregate_calc_cols": 0,
+      "dup_formula_clusters": [],
+      "typo_shadow_columns": [],
+      "cross_elem_lookup_risk": 2,
+      "sandbox_refs": [
+        "DEV_SANDBOX"
+      ]
+    },
+    {
+      "_meta": {
+        "name": "Revenue Gold DM",
+        "path": "1. PRODUCTION",
+        "version": 210,
+        "id": "sample-Revenu"
+      },
+      "elements": 58,
+      "empty_named_elements": 48,
+      "source_kinds": {},
+      "total_columns": 158,
+      "calc_columns": 100,
+      "passthrough_columns": 58,
+      "metrics": 64,
+      "relationships": 27,
+      "lookup_columns": 0,
+      "aggregate_calc_cols": 32,
+      "dup_formula_clusters": [],
+      "typo_shadow_columns": [],
+      "cross_elem_lookup_risk": 0,
+      "sandbox_refs": []
+    },
+    {
+      "_meta": {
+        "name": "Marketing Spend DM",
+        "path": "0. CENTRALIZED/Marketing",
+        "version": 55,
+        "id": "sample-Market"
+      },
+      "elements": 20,
+      "empty_named_elements": 1,
+      "source_kinds": {},
+      "total_columns": 64,
+      "calc_columns": 44,
+      "passthrough_columns": 20,
+      "metrics": 1,
+      "relationships": 0,
+      "lookup_columns": 2,
+      "aggregate_calc_cols": 0,
+      "dup_formula_clusters": [],
+      "typo_shadow_columns": [],
+      "cross_elem_lookup_risk": 2,
+      "sandbox_refs": []
+    },
+    {
+      "_meta": {
+        "name": "Finance Targets DM",
+        "path": "FP&A/Models",
+        "version": 70,
+        "id": "sample-Financ"
+      },
+      "elements": 18,
+      "empty_named_elements": 3,
+      "source_kinds": {},
+      "total_columns": 88,
+      "calc_columns": 70,
+      "passthrough_columns": 18,
+      "metrics": 0,
+      "relationships": 0,
+      "lookup_columns": 0,
+      "aggregate_calc_cols": 0,
+      "dup_formula_clusters": [],
+      "typo_shadow_columns": [],
+      "cross_elem_lookup_risk": 0,
+      "sandbox_refs": []
+    },
+    {
+      "_meta": {
+        "name": "Web Analytics DM",
+        "path": "0. CENTRALIZED/Digital",
+        "version": 33,
+        "id": "sample-Web An"
+      },
+      "elements": 12,
+      "empty_named_elements": 1,
+      "source_kinds": {},
+      "total_columns": 42,
+      "calc_columns": 30,
+      "passthrough_columns": 12,
+      "metrics": 8,
+      "relationships": 4,
+      "lookup_columns": 0,
+      "aggregate_calc_cols": 4,
+      "dup_formula_clusters": [],
+      "typo_shadow_columns": [],
+      "cross_elem_lookup_risk": 0,
+      "sandbox_refs": []
+    },
+    {
+      "_meta": {
+        "name": "Returns DM",
+        "path": "0. CENTRALIZED/Ops",
+        "version": 22,
+        "id": "sample-Return"
+      },
+      "elements": 10,
+      "empty_named_elements": 6,
+      "source_kinds": {},
+      "total_columns": 35,
+      "calc_columns": 25,
+      "passthrough_columns": 10,
+      "metrics": 0,
+      "relationships": 0,
+      "lookup_columns": 0,
+      "aggregate_calc_cols": 0,
+      "dup_formula_clusters": [],
+      "typo_shadow_columns": [],
+      "cross_elem_lookup_risk": 0,
+      "sandbox_refs": [
+        "DEV_SANDBOX"
+      ]
+    },
+    {
+      "_meta": {
+        "name": "Pricing DM",
+        "path": "FP&A/Models",
+        "version": 18,
+        "id": "sample-Pricin"
+      },
+      "elements": 8,
+      "empty_named_elements": 2,
+      "source_kinds": {},
+      "total_columns": 29,
+      "calc_columns": 21,
+      "passthrough_columns": 8,
+      "metrics": 2,
+      "relationships": 0,
+      "lookup_columns": 1,
+      "aggregate_calc_cols": 1,
+      "dup_formula_clusters": [],
+      "typo_shadow_columns": [],
+      "cross_elem_lookup_risk": 1,
+      "sandbox_refs": []
+    }
+  ],
+  "consumer_coverage": {
+    "workbooks_total": 0,
+    "specs_read": 0,
+    "specs_errored": 0,
+    "workbooks_with_dm_ref": 0,
+    "consumer_counts_reliable": false
+  }
+}

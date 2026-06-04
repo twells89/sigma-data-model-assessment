@@ -1,0 +1,199 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sigma Data Model Assessment — Northwind Trading Co. (sample)</title>
+<style>
+:root{--ink:#1a2233;--mut:#5b6779;--line:#e6e9f0;--bg:#f6f8fb;--card:#fff;
+--accent:#3b5bdb;--crit:#d6336c;--high:#e8590c;--med:#1971c2;--low:#2f9e44;}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+color:var(--ink);background:var(--bg)}
+.wrap{max-width:960px;margin:0 auto;padding:0 28px 80px}
+header.cover{background:linear-gradient(135deg,#202b4d,#3b5bdb);color:#fff;padding:54px 0 46px;margin-bottom:34px}
+header.cover .wrap{padding-bottom:0}
+.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:12px;opacity:.85;margin:0}
+header.cover h1{font-size:32px;margin:8px 0 6px;font-weight:700}
+header.cover .sub{opacity:.9;font-size:15px}
+header.cover .ro{display:inline-block;margin-top:18px;background:rgba(255,255,255,.15);
+border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:20px;font-size:12.5px}
+h2{font-size:20px;margin:42px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:-60px 0 0;position:relative}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+box-shadow:0 6px 20px rgba(20,30,60,.06)}
+.kpi-v{font-size:26px;font-weight:700;color:var(--accent)}
+.kpi-l{font-size:13px;font-weight:600;margin-top:2px}
+.kpi-s{font-size:12px;color:var(--mut)}
+.summary{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 24px;
+margin-top:24px;font-size:15.5px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+border-radius:12px;overflow:hidden;font-size:13.5px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:#f0f3f9;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.name{font-weight:600}
+tr:last-child td{border-bottom:none}
+.warn{color:var(--high);font-weight:700}
+.flag{font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px}
+.flag.crit{background:#ffe3ec;color:var(--crit)}
+.ok{color:#adb5bd}
+.barcell{width:42%}
+.bar{display:block;height:10px;border-radius:6px;background:var(--accent);opacity:.85}
+.note{color:var(--mut);font-size:13px;margin-top:8px}
+.rec{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--med);
+border-radius:12px;padding:20px 22px;margin:16px 0;box-shadow:0 2px 10px rgba(20,30,60,.04)}
+.rec.critical{border-left-color:var(--crit)} .rec.high{border-left-color:var(--high)}
+.rec.medium{border-left-color:var(--med)} .rec.low{border-left-color:var(--low)}
+.rec-head{display:flex;gap:14px;align-items:flex-start}
+.num-badge{flex:none;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;
+font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.rec h3{margin:6px 0 0;font-size:17px;line-height:1.4}
+.rec-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sev-tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;color:#fff}
+.sev-tag.critical{background:var(--crit)} .sev-tag.high{background:var(--high)}
+.sev-tag.medium{background:var(--med)} .sev-tag.low{background:var(--low)}
+.chip{font-size:11.5px;background:#eef1f8;color:var(--mut);padding:2px 9px;border-radius:6px;font-weight:600}
+.chip.ghost{background:transparent;border:1px solid var(--line)}
+.impact{margin:14px 0 6px}
+.aff-wrap{background:#f7f9fc;border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:10px 0}
+.aff-h,.act-h{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);
+font-weight:700;margin-bottom:4px}
+.act-h{margin-top:14px}
+ul.aff{margin:4px 0;padding-left:18px} ul.aff li{margin:3px 0}
+ul.aff.code li{list-style:none;margin-left:-18px}
+.path{color:var(--mut);font-size:12px}
+ol.acts{margin:6px 0 0;padding-left:20px} ol.acts li{margin:6px 0}
+code{background:#eef1f8;padding:1px 5px;border-radius:4px;font-size:12.5px;
+font-family:"SF Mono",SFMono-Regular,Menlo,Consolas,monospace}
+footer{color:var(--mut);font-size:12.5px;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}
+</style></head><body>
+<header class="cover"><div class="wrap">
+<p class="eyebrow">Sigma · Data Model Health Assessment</p>
+<h1>Northwind Trading Co. (sample)</h1>
+<div class="sub">Review of existing Sigma data models against best practices · 2026-06-04</div>
+<span class="ro">🔒 Read-only review — no data models were modified</span>
+</div></header>
+<div class="wrap">
+<div class="kpis"><div class='kpi'><div class='kpi-v'>122</div><div class='kpi-l'>Data models</div><div class='kpi-s'>across the org</div></div><div class='kpi'><div class='kpi-v'>64%</div><div class='kpi-l'>In personal spaces</div><div class='kpi-s'>78 in My Documents</div></div><div class='kpi'><div class='kpi-v'>1</div><div class='kpi-l'>In production</div><div class='kpi-s'>promotion path</div></div><div class='kpi'><div class='kpi-v'>~12</div><div class='kpi-l'>Duplicate models</div><div class='kpi-s'>4 clusters</div></div><div class='kpi'><div class='kpi-v'>3</div><div class='kpi-l'>Integrity flags</div><div class='kpi-s'>sandbox sources</div></div><div class='kpi'><div class='kpi-v'>5/10</div><div class='kpi-l'>Models w/o metrics</div><div class='kpi-s'>of analyzed</div></div></div>
+<div class="summary"><h2 style="margin-top:6px;border:none;padding:0;font-size:18px">Executive summary</h2>This review covers all <b>122</b> data models in the Northwind Trading Co. (sample) Sigma organization and a deep structural analysis of the <b>10</b> models on the governed surface. The portfolio is healthy in places — <b>Revenue Gold DM</b> shows the target pattern of reusable metrics (64) and declared relationships (27) — but three themes stand out. First and most important, <b>3 centralized models read from a sandbox/dev schema</b>, a data-integrity risk worth fixing before anything else. Second, governance: <b>64%</b> of models sit in personal spaces with only <b>1</b> promoted to production, and ~<b>12</b> models are duplicates. Third, reusability: <b>5</b> of the analyzed models define no reusable metrics, and <b>5</b> rely on cross-element lookups that can break charts at view time. Each finding below includes the affected models and concrete next steps. <b>This was a read-only review — no models were changed.</b></div>
+
+<h2>Where the data models live</h2>
+<table><thead><tr><th>Location</th><th class="num">Models</th><th></th></tr></thead>
+<tbody><tr><td>personal (My Documents)</td><td class='num'>78</td><td class='barcell'><span class='bar' style='width:100%'></span></td></tr><tr><td>0. CENTRALIZED</td><td class='num'>22</td><td class='barcell'><span class='bar' style='width:28%'></span></td></tr><tr><td>other shared</td><td class='num'>12</td><td class='barcell'><span class='bar' style='width:15%'></span></td></tr><tr><td>FP&amp;A</td><td class='num'>9</td><td class='barcell'><span class='bar' style='width:12%'></span></td></tr><tr><td>1. PRODUCTION</td><td class='num'>1</td><td class='barcell'><span class='bar' style='width:1%'></span></td></tr></tbody></table>
+<p class="note">A healthy portfolio concentrates shared models on a governed surface with a real
+promotion path; large personal/sandbox populations indicate sprawl.</p>
+
+<h2>Detailed recommendations</h2>
+
+        <div class="rec critical">
+          <div class="rec-head">
+            <span class="num-badge">1</span>
+            <div>
+              <div class="rec-meta"><span class="sev-tag critical">CRITICAL</span>
+                <span class="chip">Data integrity</span><span class="chip ghost">Effort: High · cross-team</span></div>
+              <h3>3 governed data models read from a sandbox/dev schema (DEV_SANDBOX)</h3>
+            </div>
+          </div>
+          <p class="impact">These models live on the centralized/production surface yet pull from a non-production schema. Anyone building on them is trusting numbers that can change or disappear without notice — this is a correctness and trust risk, not just housekeeping, which is why it ranks first.</p>
+          <div class='aff-wrap'><div class='aff-h'>Affected models</div><ul class='aff'><li><b>Legacy Orders DM</b> <span class='path'>0. CENTRALIZED/Legacy</span></li><li><b>Inventory Snapshot DM</b> <span class='path'>0. CENTRALIZED/Ops</span></li><li><b>Returns DM</b> <span class='path'>0. CENTRALIZED/Ops</span></li></ul></div>
+          <div class="act-h">Recommended actions</div>
+          <ol class="acts"><li>Confirm the production equivalent of each <code>*_SANDBOX</code> object with the data-engineering owner (most are <code>DW_SALES</code> / <code>DW_ODS</code> legacy lineage).</li><li>Re-point each model's source element to the production schema; column references carry over unchanged when names match.</li><li>Validate a known KPI on each re-pointed model against a trusted figure before publishing the new version.</li><li>Add a lightweight standard: models under <code>0. CENTRALIZED…</code> may only source from production schemas (a periodic re-run of this assessment enforces it).</li></ol>
+        </div>
+        <div class="rec high">
+          <div class="rec-head">
+            <span class="num-badge">2</span>
+            <div>
+              <div class="rec-meta"><span class="sev-tag high">HIGH</span>
+                <span class="chip">Correctness</span><span class="chip ghost">Effort: Medium</span></div>
+              <h3>5 models join across elements with <code>Lookup()</code> instead of declared relationships</h3>
+            </div>
+          </div>
+          <p class="impact">A cross-element <code>Lookup()</code> is fine for a scalar measure, but the moment one is used as a grouping dimension in a chart, Sigma can only resolve a single external relation per query and the visual renders the literal error <i>“Rollup cannot reference more than one external relation.”</i> It surfaces at view time with no build-time warning, so it tends to be discovered by an end user.</p>
+          <div class='aff-wrap'><div class='aff-h'>Affected models</div><ul class='aff'><li><b>Sales Mart DM</b> — 18 cross-element lookups, 0 declared relationships</li><li><b>Customer 360 DM</b> — 12 cross-element lookups, 0 declared relationships</li><li><b>Inventory Snapshot DM</b> — 2 cross-element lookups, 0 declared relationships</li><li><b>Marketing Spend DM</b> — 2 cross-element lookups, 0 declared relationships</li><li><b>Pricing DM</b> — 1 cross-element lookups, 0 declared relationships</li></ul></div>
+          <div class="act-h">Recommended actions</div>
+          <ol class="acts"><li>For each model, identify the cross-element <code>Lookup()</code> columns and which are used as chart grouping dimensions downstream.</li><li>Replace those with a <b>declared relationship</b> between the two elements so the query planner handles the join — or switch the element's source to a <code>join</code> so the dimension is baked into the SQL.</li><li>Leave scalar-only lookups (numerator/denominator inside an aggregate) as-is.</li><li>Start with <b>Sales Mart DM</b> (18) and <b>Customer 360 DM</b> (12) — the highest exposure.</li></ol>
+        </div>
+        <div class="rec medium">
+          <div class="rec-head">
+            <span class="num-badge">3</span>
+            <div>
+              <div class="rec-meta"><span class="sev-tag medium">MEDIUM</span>
+                <span class="chip">Governance</span><span class="chip ghost">Effort: Medium · ongoing</span></div>
+              <h3>4 duplicate clusters span ~12 data models (10% of the org)</h3>
+            </div>
+          </div>
+          <p class="impact">Near-identical copies (e.g. <code>X DM</code>, <code>X DM (1)</code>, <code>X DM Test</code>, UAT/backup variants) split usage and let definitions drift, so two dashboards on “the same” model can disagree.</p>
+          <div class='aff-wrap'><div class='aff-h'>Affected models</div><ul class='aff'><li>4× <b>Sales Mart DM</b> <span class='path'>0. CENTRALIZED/Sales; My Documents</span></li><li>3× <b>Customer 360 DM</b> <span class='path'>0. CENTRALIZED/CRM; My Documents</span></li><li>3× <b>Finance Targets DM</b> <span class='path'>FP&amp;A/Models; My Documents/Archived Users/j.doe</span></li><li>2× <b>Returns DM</b> <span class='path'>0. CENTRALIZED/Ops; My Documents</span></li></ul></div>
+          <div class="act-h">Recommended actions</div>
+          <ol class="acts"><li>Pick the canonical version in each cluster (newest on the governed surface) and confirm it covers the others' columns.</li><li>Re-point consumers to the canonical model, then archive the copies (archiving is reversible).</li><li>Discourage “Save As” for shared models; promote a copy into a governed folder instead.</li></ol>
+        </div>
+        <div class="rec medium">
+          <div class="rec-head">
+            <span class="num-badge">4</span>
+            <div>
+              <div class="rec-meta"><span class="sev-tag medium">MEDIUM</span>
+                <span class="chip">Governance</span><span class="chip ghost">Effort: Low policy · ongoing</span></div>
+              <h3>78 of 122 models (64%) live in personal <i>My Documents</i>; only 1 sit in <code>1. PRODUCTION</code></h3>
+            </div>
+          </div>
+          <p class="impact">Models in personal spaces aren't discoverable, owned, or promoted as a team asset, and they vanish when a person offboards (several copies already sit under <i>Archived Users</i>). The near-empty promotion path means “production” isn't yet the single source of truth.</p>
+          
+          <div class="act-h">Recommended actions</div>
+          <ol class="acts"><li>Define a simple promotion path: personal → team/sandbox → <code>1. PRODUCTION</code>, with an owner and a short review per promotion.</li><li>Identify the handful of personal models that real dashboards depend on and promote them first.</li><li>Re-run this assessment quarterly to watch the production count grow and sprawl shrink.</li></ol>
+        </div>
+        <div class="rec medium">
+          <div class="rec-head">
+            <span class="num-badge">5</span>
+            <div>
+              <div class="rec-meta"><span class="sev-tag medium">MEDIUM</span>
+                <span class="chip">Reusability</span><span class="chip ghost">Effort: Medium</span></div>
+              <h3>5 of 10 analyzed models define no reusable metrics</h3>
+            </div>
+          </div>
+          <p class="impact">When a model has no metrics, every dashboard re-implements its own <code>Sum()</code>/<code>CountDistinct()</code> logic, so the same KPI drifts across reports and there's no governed definition to point to. <b>Revenue Gold DM</b> already does this well (64 reusable metrics) and is a good in-house template.</p>
+          <div class='aff-wrap'><div class='aff-h'>Affected models</div><ul class='aff'><li><b>Sales Mart DM</b> — 190 calc columns, 0 metrics</li><li><b>Finance Targets DM</b> — 70 calc columns, 0 metrics</li><li><b>Legacy Orders DM</b> — 50 calc columns, 0 metrics</li><li><b>Inventory Snapshot DM</b> — 30 calc columns, 0 metrics</li><li><b>Returns DM</b> — 25 calc columns, 0 metrics</li></ul></div>
+          <div class="act-h">Recommended actions</div>
+          <ol class="acts"><li>On each heavy model, promote the obvious aggregate calc columns (<code>Sum([Net Revenue])</code> etc.) to <b>element metrics</b> with a clear name and description.</li><li>Express ratios/derived KPIs once as metrics so consumers reference them instead of rebuilding.</li><li>Lead with <b>Sales Mart DM</b> — the highest calc surface with zero metrics today.</li></ol>
+        </div>
+        <div class="rec low">
+          <div class="rec-head">
+            <span class="num-badge">6</span>
+            <div>
+              <div class="rec-meta"><span class="sev-tag low">LOW</span>
+                <span class="chip">Maintainability</span><span class="chip ghost">Effort: Low per model</span></div>
+              <h3>Large models repeat the same formula many times — e.g. <b>Sales Mart DM</b> has 3 repeated definitions</h3>
+            </div>
+          </div>
+          <p class="impact">Identical formulas copied across elements mean a change has to be made in many places, and missing one creates a silent inconsistency. (Worst single model carries 190 calc columns.)</p>
+          <div class='aff-wrap'><div class='aff-h'>Affected models</div><ul class='aff code'><li><code>DateTrunc(&quot;day&quot;, [As Of])</code> — defined 6×</li><li><code>[Gross Revenue] + [Adjustments]</code> — defined 4×</li><li><code>DateAdd(&quot;day&quot;, -1, Today())</code> — defined 4×</li></ul></div>
+          <div class="act-h">Recommended actions</div>
+          <ol class="acts"><li>Define each repeated expression once (a shared calc column or metric on the source element) and reference it everywhere else.</li><li>Calendar/date helpers like <code>DateTrunc("day", [As Of])</code> are good candidates for a single shared date element.</li></ol>
+        </div>
+        <div class="rec low">
+          <div class="rec-head">
+            <span class="num-badge">7</span>
+            <div>
+              <div class="rec-meta"><span class="sev-tag low">LOW</span>
+                <span class="chip">Discoverability</span><span class="chip ghost">Effort: Low</span></div>
+              <h3>Many models leave imported elements unnamed</h3>
+            </div>
+          </div>
+          <p class="impact">Consumers browsing the model see anonymous elements and can't tell one revenue slice from another without clicking in — friction that pushes them to rebuild rather than reuse.</p>
+          <div class='aff-wrap'><div class='aff-h'>Affected models</div><ul class='aff'><li><b>Revenue Gold DM</b> — 48 unnamed elements</li><li><b>Legacy Orders DM</b> — 14 unnamed elements</li><li><b>Customer 360 DM</b> — 10 unnamed elements</li><li><b>Sales Mart DM</b> — 9 unnamed elements</li><li><b>Returns DM</b> — 6 unnamed elements</li><li><b>Finance Targets DM</b> — 3 unnamed elements</li></ul></div>
+          <div class="act-h">Recommended actions</div>
+          <ol class="acts"><li>Give every element a meaningful name (a ~30-minute pass per model).</li><li>While there, fix typo columns that shadow the real one (e.g. <code>Defintion</code> vs <code>Definition</code>).</li></ol>
+        </div>
+
+<h2>Priority data models</h2>
+<p class="note">The 10 highest-concern of 10 governed models analyzed, with the
+structural signals behind the recommendations. <b>Calc</b> = calculated columns,
+<b>Metrics</b>/<b>Rels</b> = reusable metrics &amp; declared relationships (more is healthier),
+<b>Lookup</b> = cross-element lookups without a declared relationship.</p>
+<table><thead><tr><th>Data model</th><th class="num">Ver</th><th class="num">Elems</th>
+<th class="num">Calc</th><th class="num">Metrics</th><th class="num">Rels</th>
+<th class="num">Lookup</th><th class="num">Unnamed</th><th>Integrity</th></tr></thead>
+<tbody><tr><td class='name'>Sales Mart DM</td><td class='num'>180</td><td class='num'>24</td><td class='num'>190</td><td class='num warn'>0</td><td class='num'>0</td><td class='num warn'>18</td><td class='num'>9</td><td><span class='ok'>—</span></td></tr><tr><td class='name'>Legacy Orders DM</td><td class='num'>60</td><td class='num'>27</td><td class='num'>50</td><td class='num warn'>0</td><td class='num'>6</td><td class='num '>0</td><td class='num'>14</td><td><span class='flag crit'>DEV_SANDBOX</span></td></tr><tr><td class='name'>Inventory Snapshot DM</td><td class='num'>40</td><td class='num'>7</td><td class='num'>30</td><td class='num warn'>0</td><td class='num'>0</td><td class='num warn'>2</td><td class='num'>2</td><td><span class='flag crit'>DEV_SANDBOX</span></td></tr><tr><td class='name'>Returns DM</td><td class='num'>22</td><td class='num'>10</td><td class='num'>25</td><td class='num warn'>0</td><td class='num'>0</td><td class='num '>0</td><td class='num'>6</td><td><span class='flag crit'>DEV_SANDBOX</span></td></tr><tr><td class='name'>Customer 360 DM</td><td class='num'>80</td><td class='num'>25</td><td class='num'>28</td><td class='num '>11</td><td class='num'>0</td><td class='num warn'>12</td><td class='num'>10</td><td><span class='ok'>—</span></td></tr><tr><td class='name'>Revenue Gold DM</td><td class='num'>210</td><td class='num'>58</td><td class='num'>100</td><td class='num '>64</td><td class='num'>27</td><td class='num '>0</td><td class='num'>48</td><td><span class='ok'>—</span></td></tr><tr><td class='name'>Finance Targets DM</td><td class='num'>70</td><td class='num'>18</td><td class='num'>70</td><td class='num warn'>0</td><td class='num'>0</td><td class='num '>0</td><td class='num'>3</td><td><span class='ok'>—</span></td></tr><tr><td class='name'>Marketing Spend DM</td><td class='num'>55</td><td class='num'>20</td><td class='num'>44</td><td class='num '>1</td><td class='num'>0</td><td class='num warn'>2</td><td class='num'>1</td><td><span class='ok'>—</span></td></tr><tr><td class='name'>Pricing DM</td><td class='num'>18</td><td class='num'>8</td><td class='num'>21</td><td class='num '>2</td><td class='num'>0</td><td class='num warn'>1</td><td class='num'>2</td><td><span class='ok'>—</span></td></tr><tr><td class='name'>Web Analytics DM</td><td class='num'>33</td><td class='num'>12</td><td class='num'>30</td><td class='num '>8</td><td class='num'>4</td><td class='num '>0</td><td class='num'>1</td><td><span class='ok'>—</span></td></tr></tbody></table>
+
+<footer>Methodology: read-only inventory of every data model via the Sigma REST API, plus a
+structural analysis of each governed-surface model's specification (elements, columns, reusable
+metrics, declared relationships, and source schemas) scored against Sigma data-model best
+practices. Priority uses each model's edit count as an activity proxy. Prepared for Northwind Trading Co. (sample).</footer>
+</div></body></html>
