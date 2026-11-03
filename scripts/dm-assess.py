@@ -123,15 +123,15 @@ DM_REF = re.compile(r'dataModelId"\s*:\s*"([0-9a-f-]{36})"')
 def build_consumer_index():
     """Real consumer counts. NOTE: /v2/workbooks?dataModelId= silently ignores the
     filter on many cred scopes (returns the whole org), so we instead crawl every
-    workbook spec and tally the dataModelId references inside it. Tolerant of the
-    intermittent 500s the spec endpoint throws. Returns (Counter, coverage dict)."""
+    workbook (GET /v2/workbooks/{id}?includeContents=true) and tally the dataModelId
+    references inside it. Tolerant of the intermittent 500s that read throws. Returns (Counter, coverage dict)."""
     wbs = page_all("/v2/workbooks", limit=200)
     idx, ok, err = Counter(), 0, 0
 
     def one(w):
         nonlocal ok, err
         try:
-            spec = api_get(f"/v2/workbooks/{w['workbookId']}/spec")
+            spec = api_get(f"/v2/workbooks/{w['workbookId']}", includeContents="true")
             return set(DM_REF.findall(json.dumps(spec)))
         except Exception:
             return None
