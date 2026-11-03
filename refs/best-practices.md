@@ -78,7 +78,7 @@ then duplicate formulas, then unnamed elements and raw calc-column volume. See
 ## Consumer counts — known API gotcha
 `/v2/workbooks?dataModelId=<id>` **silently ignores the filter** on standard
 client-credential scopes (returns the whole org). Real consumer counts therefore come
-from crawling each workbook spec for `dataModelId` references — but `/v2/workbooks/{id}/spec`
+from crawling each workbook for `dataModelId` references — but `/v2/workbooks/{id}?includeContents=true`
 is rate-limited / intermittently 5xx and many specs don't expose source `dataModelId`,
 so counts are a **floor**. An admin/elevated token makes the direct filter work.
 Until then, rank by `latestVersion` (edit-count proxy).

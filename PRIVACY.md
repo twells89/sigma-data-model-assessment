@@ -7,7 +7,7 @@ create, modify, archive, or delete anything in the customer org.
 What it reads:
 - `/v2/auth/token` — mints a short-lived bearer token from the client-credential pair.
 - `/v2/dataModels` (+ `/{id}/spec`) — the data-model inventory and each model's spec.
-- `/v2/workbooks` (+ `/{id}/spec`) — only when `--consumers` is set, to derive
+- `/v2/workbooks` (+ `/{id}?includeContents=true`) — only when `--consumers` is set, to derive
   consuming-workbook counts. Specs are read in memory and reduced to reference
   counts; raw workbook content is not persisted.
 

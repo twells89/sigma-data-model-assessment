@@ -77,7 +77,7 @@ Outputs land in `assessment-acme/`:
 get-token.sh ──► SIGMA_API_TOKEN          (client_credentials grant, retries the bursty-token 400)
 dm-assess.py ──► /v2/dataModels           enumerate + bucket by folder + duplicate clusters
              ──► /v2/dataModels/{id}/spec  deep structural analysis of the governed surface
-             ──► /v2/workbooks (+specs)    optional --consumers (best-effort, see note)
+             ──► /v2/workbooks (+contents) optional --consumers (best-effort, see note)
              ──► inventory.json + REPORT.md
 render-html.py ─► report.html             customer-facing HTML from inventory.json
 ```
